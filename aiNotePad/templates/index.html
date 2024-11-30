@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="AI SketchPad - An Math iPhone 16 mathnotes inspired tool">
+    <meta property="og:description" content="An Math iPhone 16 mathnotes inspired tool.">
+    <meta property="og:image" content="https://yourdomain.com/static/img/demo.png">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:type" content="website">
+    <title>Ai SketchPad Home</title>
+    <link rel="icon" href="{% static 'icons/favicon.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+
+<body>
+    <header>
+        <span class="logo" style="display: flex; align-items: center;">
+            <img src="{% static 'icons/favicon.svg' %}" alt="" style="width: 30px; height: 30px;">
+            <h3>AI SketchPad</h3>
+        </span>
+    </header>
+
+    <div class="home" style="display: flex; justify-content: space-around;">
+        <section class="hero">
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div>
+                <h1>The AI Powered SketchPad</h1>
+                <p>
+                    <p class="finetext">inspired by the iPad's new calculator ...</p>
+                    <ul class="finetext" style="list-style: disc;">
+                        <li>Analyze and Solve Mathematical Expressions and sketches effortlessly.</li>
+                        <li>From physics to image recognition and more.</li>
+                    </ul>
+                </p>
+
+                <a href="{% url 'NotePad:notepad' %}" class="cta-button">
+                    <img src="{% static 'img/sparkles.svg' %}" alt="" style="width: 30px; height: 20px;">Try It
+                </a>
+            </div>
+        </section>
+        <iframe loading="lazy" height="500px" src="https://www.youtube.com/embed/tuJp2JOQxLg?autoplay=1&mute=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <section id="how-it-works" class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">✍️</div>
+                    <h3>Draw</h3>
+                    <p>Use your finger or a stylus to sketch.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">📝</div>
+                    <h3>Context</h3>
+                    <p>Optionally add descriptions to your drawings with the bottom input bar.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">📤</div>
+                    <h3>Upload</h3>
+                    <p>Submit your image for analysis using the green button.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">⚙️</div>
+                    <h3>Analyze</h3>
+                    <p>Get instant results with detailed explanations.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🔄</div>
+                    <h3>Reset</h3>
+                    <p>Reset your canvas to start another drawing.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="demo" style="overflow: scroll;">
+            <h3>Demo</h3>
+            <img src="{% static 'img/demo.png' %}" width="100%" style="object-fit: cover;">
+        </div>
+
+        <section id="features" class="features">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✍️</div>
+                    <h3>Interactive Sketching</h3>
+                    <p>Freely sketch with customizable tools.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📏</div>
+                    <h3>Multiple Grid Styles</h3>
+                    <p>Toggle multiple grid types from right side bar when menu is toggled.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Collapsible Results</h3>
+                    <p>View concise summaries with detailed explanations on demand.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📐</div>
+                    <h3>Multiple Expression Types</h3>
+                    <p>Solve equations, analyze drawings, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Graphing of Result</h3>
+                    <p>Graphing needed mathematical functionas and equations along with the result.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖌️</div>
+                    <h3>Custom Color Selection</h3>
+                    <p>Choose colors for your sketches and highlights.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Many More Features Coming Soon!</h3>
+                    <p>Stay tuned for updates and enhancements.</p>
+                    <div class="coming-soon-label">✨ Coming Soon! ✨</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Intelligent result Placement</h3>
+                    <p>Placeing reslult intelligently where needed ie rows, colums after equal to sign.</p>
+                    <div class="coming-soon-label">✨ Coming Soon! ✨</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">↔️</div>
+                    <h3>Zoom & Pan</h3>
+                    <p>To accomodate larger drawing and setting of desired drawing canvas size.</p>
+                    <div class="coming-soon-label">✨ Coming Soon! ✨</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖌️</div>
+                    <h3>Beautiful Text formating</h3>
+                    <p>Better maths formating, variable colors and many more</p>
+                    <div class="coming-soon-label">✨ Coming Soon! ✨</div>
+                </div>
+            </div>
+            <br>            
+            <a href="{% url 'NotePad:notepad' %}" class="cta-button">
+                <img src="{% static 'img/sparkles.svg' %}" alt="" style="width: 30px; height: 20px;">Try It
+            </a>
+        </section>
+
+    <footer id="contact">
+        <p style="color: #4CAF50;">Contacts:</p>
+        <div class="social-media">
+            <a id="whatsapp-button">Whatsapp</a>
+            <a href="https://github.com/Stephenmatthew100">GitHub</a>
+            <a id="email-button">Email</a>
+        </div>
+    </footer>
+</body>
+<script>
+    document.getElementById('whatsapp-button').addEventListener('click', () => {
+        const whatsappNumber = '09130131915';
+        const message = 'Hello, I would like to get in touch!';
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappURL, '_blank');
+    });
+
+    document.getElementById('email-button').addEventListener('click', () => {
+        const email = 'stephenmatthew283@gmail.com';
+        const subject = 'Hello';
+        const body = 'I would like to get in touch.';
+        const emailURL = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.open(emailURL, '_blank');
+    });
+</script>
+</html>

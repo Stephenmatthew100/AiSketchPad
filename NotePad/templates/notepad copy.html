@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketch Pad</title>
+    <link rel="stylesheet" href="{% static 'css/notepad.css' %}">
+    <link rel="icon" href="{% static 'icons/favicon.svg' %}" type="image/svg+xml">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="message-box"></div>
+
+    <canvas id="grid-canvas" style="z-index: 1; position: absolute; top: 0; left: 0;"></canvas>
+    <div id="canvas-container" style="width: 100vw; height: 100vh; overflow: auto; position: relative;">
+        <canvas id="sketch-pad" style="z-index: 2; position: absolute; top: 0; left: 0;">
+            <div id="coordinates" style="color: white; position: absolute; left: 10px; top: 10px; z-index: 3;">
+                X: <span id="coord-x">0</span>, Y: <span id="coord-y">0</span>
+            </div>
+        </canvas>
+    </div>
+
+    <div id="results-container">
+        <h2 id="results-header" title="click on me 😊">Results</h2>
+        <div id="result-boxes" title="click on me 😊"></div>
+    </div>
+
+    <button id="toggle-controls" class="toggle-button">
+        <span class="hamburger">&#9776;</span>
+        <span class="close" style="display: none;">&times;</span>
+    </button>
+
+    <div class="controls-bar" id="controls-bar">
+        <div class="color-swatches">
+            <div class="color-swatch" style="background-color: white;"></div>
+            <div class="color-swatch" style="background-color: red;"></div>
+            <div class="color-swatch" style="background-color: lightblue;"></div>
+            <div class="color-swatch" style="background-color: skyblue;"></div>
+            <div class="color-swatch" style="background-color: greenyellow;"></div>
+            <div class="color-swatch" style="background-color: lawngreen;"></div>
+            <div class="color-swatch" style="background-color: yellow;"></div>
+            <div class="color-swatch" style="background-color: orange;"></div>
+            <div class="color-swatch" style="background-color: brown;"></div>
+            <div class="color-swatch" style="background-color: purple;"></div>
+            <div class="color-swatch" id="custom-color-swatch">
+                <img src="{% static 'img/color-palette.svg' %}" style="object-fit: cover;">
+            </div>
+        </div>
+
+        <div class="controls-actions">
+            <button id="erase"><img src="{% static 'img/eraser.svg' %}" alt=""></button>
+            
+            <button id="drawTool" style="margin-right: 0;"><img src="{% static 'img/pen.svg' %}"></button>
+            <span class="box" style="padding: 8px;">
+                <input type="range" id="pen-size" min="1" max="20" value="3">
+                <label for="pen-px" id="pen-px"></label>
+            </span>
+
+            <button id="panTool"><img src="{% static 'img/move.svg' %}"></button>
+            <button class="btn" id="set-workspace-size" title="this will be canvas size toggle btn in future" disabled></button>
+            
+        </div>
+    </div>
+
+    <div class="grid-selector" id="grid-selector" style="display: none;">
+        <button class="btn grid-btn" id="blank-grid" data-grid-type="blank-grid">
+        </button>
+        <button class="btn grid-btn" id="square-grid" data-grid-type="square-grid">
+            <img src="{% static 'img/grid.svg' %}" alt="Square Grid" style="padding: 4px;">
+        </button>
+        <button class="btn grid-btn" id="notebook-grid" data-grid-type="notebook-grid">
+            <img src="{% static 'img/lines.svg' %}" alt="Notebook" style="padding: 4px;">
+        </button>
+        <button class="btn grid-btn" id="dot-grid" data-grid-type="dot-grid">
+            <img src="{% static 'img/dots.svg' %}" alt="Dot Grid" style="padding: 4px;">
+        </button>
+        <button class="btn grid-btn" id="graph-paper" data-grid-type="graph-paper">
+            <img src="{% static 'img/graph.svg' %}" alt="Graph Paper" style="padding: 4px;">
+        </button>
+    </div> 
+
+    <div id="color-dialog" class="color-dialog">
+        <label for="custom-color">Choose Color:</label>
+        <input type="color" id="custom-color" value="#ffffff">
+        <br>
+        <button id="apply-color">Apply</button>
+        <button id="close-dialog">Close</button>
+    </div>
+
+    <div id="canvas-size-dialog" style="display: none;" class="color-dialog">
+        <label for="workspace-width">Canvas Width:</label>
+        <input type="text" id="workspace-width">
+        <label for="workspace-height">Canvas Height:</label>
+        <input type="text" id="workspace-height">
+        <button id="workspace-height">Apply</button>
+        <button id="close-dialog">Close</button>
+    </div>
+
+    <span class="text-input-container">
+        <div class="input-wrapper">
+            <button id="reset" class="btn">
+                <img src="{% static 'img/reset.svg' %}"alt="">
+            </button>
+            <textarea id="context-input" placeholder="Optional context or description..."></textarea>
+            <button class="btn" id="zend">
+                <img src="{% static 'img/sparkles.svg' %}" alt="">
+            </button>
+        </div>
+    </span>
+
+    <script src="{% static 'js/notepad.js' %}"></script>
+</body>
+</html>

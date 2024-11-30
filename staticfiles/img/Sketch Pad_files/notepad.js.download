@@ -1,0 +1,279 @@
+const canvas = document.getElementById('sketch-pad');
+const ctx = canvas.getContext('2d');
+const penSizeInput = document.getElementById('pen-size');
+const eraseButton = document.getElementById('erase');
+const resetButton = document.getElementById('reset');
+const customColorSwatch = document.getElementById('custom-color-swatch');
+const colorDialog = document.getElementById('color-dialog');
+const customColorInput = document.getElementById('custom-color');
+const applyColorButton = document.getElementById('apply-color');
+const closeDialogButton = document.getElementById('close-dialog');
+const uploadButton = document.getElementById('zend');
+const contextInput = document.getElementById('context-input');
+const gridSelect = document.getElementById('gridType');
+let isDrawing = false, color = '#ffffff', brushSize = 3, isErasing = false;
+let isPanning = false;
+let startX, startY, panX = 0, panY = 0;
+
+// const resizeCanvas = () => {
+//     const aspectRatio = 4 / 7;
+//     let canvasWidth = window.innerWidth;
+//     let canvasHeight = Math.min(canvasWidth / aspectRatio, window.innerHeight - 120);
+//     canvas.width = canvasWidth; canvas.height = canvasHeight;
+//     document.getElementById('pen-px').textContent = brushSize;
+// };
+
+// window.addEventListener('resize', resizeCanvas);
+// resizeCanvas();
+
+
+// Function to draw selected grid
+
+function drawSelectedGrid(gridType) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas before drawing grid
+    
+    if (gridType === 'square-grid') {
+        drawSquareGrid();
+    } else if (gridType === 'notebook-grid') {
+        drawNotebookLayout();
+    } else if (gridType === 'dot-grid') {
+        drawDotGrid();
+    } else if (gridType === 'graph-paper') {
+        drawGraphPaper();
+    }
+}
+
+document.getElementById('panTool').addEventListener('click', () => {
+    isPanning = true;
+    isDrawing = false;
+});
+document.getElementById('drawTool').addEventListener('click', () => {
+    isDrawing = true;
+    isPanning = false;
+});
+
+canvas.addEventListener('mousedown', (e) => {
+    if (!isPanning) return; // Only pan if panning mode is active
+    startX = e.clientX - panX;
+    startY = e.clientY - panY;
+    canvas.style.cursor = 'all-scroll';
+  });
+  
+  canvas.addEventListener('mousemove', (e) => {
+    if (!isPanning) return; // No panning unless the panning tool is active
+    panX = e.clientX - startX;
+    panY = e.clientY - startY;
+    
+    // Reset transform and apply new translation for panning
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.translate(panX, panY);
+  
+    // Redraw everything including the grid and content after panning
+    drawGrid();
+    redrawCanvasContent();
+  });
+  
+  canvas.addEventListener('mouseup', () => isPanning = false);
+
+function drawNotebookLayout() {
+    const lineSpacing = 40;
+    const margin = 50; // Left margin like a notebook
+    ctx.strokeStyle = 'green'; // Line color
+
+    ctx.beginPath();
+    ctx.moveTo(margin, 0);
+    ctx.lineTo(margin, canvas.height);
+    ctx.stroke();
+
+    for (let y = lineSpacing; y < canvas.height; y += lineSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+    }
+}
+
+function drawSquareGrid() {
+    const gridSize = 50;
+    ctx.strokeStyle = 'green'; // Grid line color
+    ctx.lineWidth = 0.5; // Thin lines
+
+    for (let x = 0; x < canvas.width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+    }
+    
+    for (let y = 0; y < canvas.height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+    }
+}
+
+function drawDotGrid() {
+    const dotSpacing = 40;
+    ctx.fillStyle = 'green'; // Dot color
+
+    for (let x = dotSpacing / 2; x < canvas.width; x += dotSpacing) {
+        for (let y = dotSpacing / 2; y < canvas.height; y += dotSpacing) {
+            ctx.beginPath();
+            ctx.arc(x, y, 1, 0, Math.PI * 2); // Small dot
+            ctx.fill();
+        }
+    }
+}
+
+function drawGraphPaper() {
+    const majorGridSize = 100;
+    const minorGridSize = 20;
+
+    // Draw major grid lines (darker)
+    ctx.strokeStyle = '#000'; // Major grid line color
+    ctx.lineWidth = 1; // Slightly thicker for major lines
+    for (let x = 0; x < canvas.width; x += majorGridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+    }
+
+    for (let y = 0; y < canvas.height; y += majorGridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+    }
+
+    // Draw minor grid lines (lighter)
+    ctx.strokeStyle = '#aaa'; // Minor grid line color
+    ctx.lineWidth = 0.5; // Thin lines for minor
+    for (let x = 0; x < canvas.width; x += minorGridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+    }
+
+    for (let y = 0; y < canvas.height; y += minorGridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+    }
+}
+
+// Event listeners for grid buttons
+document.getElementById('square-grid').addEventListener('click', () => drawSelectedGrid('square-grid'));
+document.getElementById('notebook-grid').addEventListener('click', () => drawSelectedGrid('notebook-grid'));
+document.getElementById('dot-grid').addEventListener('click', () => drawSelectedGrid('dot-grid'));
+document.getElementById('graph-paper').addEventListener('click', () => drawSelectedGrid('graph-paper'));
+
+const draw = (x, y) => {
+    if (!isDrawing) return;
+    ctx.strokeStyle = color; ctx.lineWidth = brushSize;
+    ctx.lineTo(x, y); ctx.stroke();
+};
+
+const startDrawing = (e) => {
+    isDrawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY);
+};
+
+const endDrawing = () => {
+    isDrawing = false; ctx.closePath();
+};
+
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', (e) => draw(e.offsetX, e.offsetY));
+canvas.addEventListener('mouseup', endDrawing);
+canvas.addEventListener('mouseout', endDrawing);
+
+canvas.addEventListener('touchstart', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    startDrawing({ offsetX: e.touches[0].clientX - rect.left, offsetY: e.touches[0].clientY - rect.top });
+});
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    draw(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+});
+canvas.addEventListener('touchend', endDrawing);
+
+document.querySelectorAll('.color-swatch').forEach(swatch => {
+    swatch.addEventListener('click', (e) => {
+        color = e.target.style.backgroundColor;
+        customColorSwatch.style.backgroundColor = color; isErasing = false;
+    });
+});
+
+customColorSwatch.addEventListener('click', () => { colorDialog.style.display = 'block'; });
+applyColorButton.addEventListener('click', () => {
+    color = customColorInput.value;
+    customColorSwatch.style.backgroundColor = color;
+    colorDialog.style.display = 'none';
+});
+closeDialogButton.addEventListener('click', () => { colorDialog.style.display = 'none'; });
+
+eraseButton.addEventListener('click', () => {
+    isErasing = true; color = 'rgb(19, 18, 18)'; // Canvas background color
+    customColorSwatch.style.backgroundColor = color; colorDialog.style.display = 'none';
+});
+
+resetButton.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
+
+penSizeInput.addEventListener('input', (event) => {
+    brushSize = event.target.value; document.getElementById('pen-px').textContent = brushSize;
+});
+
+const sendImageToBackend = async () => {
+    const imageData = canvas.toDataURL('image/png');
+    const data = {
+        image: imageData,
+        dict_of_vars: { context: contextInput.value }
+    };
+    try {
+        const response = await fetch('/upload/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+        const result = await response.json();
+        console.log('Backend response:', result);
+        if (result.status === 'success') updateCanvasWithText(result.data);
+        else console.error('Error processing image:', result.message);
+    } catch (error) { console.error('Error:', error); }
+};
+
+const updateCanvasWithText = (responses) => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'white'; ctx.font = '16px Arial';
+    responses.forEach((response, i) => {
+        ctx.fillText(`Expression: ${response.expr || ''}`, 10, 30 + i * 40);
+        ctx.fillText(`Result: ${response.result || ''}`, 10, 50 + i * 40);
+    });
+};
+
+const adjustHeight = () => {
+    contextInput.style.height = 'auto';
+    contextInput.style.height = `${Math.min(contextInput.scrollHeight, 120)}px`;
+};
+
+contextInput.addEventListener('input', adjustHeight);
+adjustHeight();
+
+uploadButton.addEventListener('click', sendImageToBackend);
+
+const toggleButton = document.getElementById('toggle-controls');
+const controlsBar = document.getElementById('controls-bar');
+const gridSelector = document.getElementById('grid-selector');
+
+toggleButton.addEventListener('click', () => {
+    const isExpanded = gridSelector.style.display === 'flex';
+    gridSelector.style.display = isExpanded ? 'none' : 'flex';
+    controlsBar.classList.toggle('expanded');
+    toggleButton.querySelector('.hamburger').style.display = controlsBar.classList.contains('expanded') ? 'none' : 'block';
+    toggleButton.querySelector('.close').style.display = controlsBar.classList.contains('expanded') ? 'block' : 'none';
+});

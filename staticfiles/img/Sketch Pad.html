@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketch Pad</title>
+    <link rel="stylesheet" href="./Sketch Pad_files/notepad.css">
+    <link rel="icon" href="http://127.0.0.1:8000/static/icons/favicon.svg" type="image/svg+xml">
+
+</head>
+<body>
+    <canvas id="sketch-pad"></canvas>
+
+    <button id="toggle-controls" class="toggle-button">
+        <span class="hamburger">☰</span>
+        <span class="close" style="display: none;">×</span>
+    </button>
+
+    <div class="controls-bar" id="controls-bar">
+        <div class="color-swatches">
+            <div class="color-swatch" style="background-color: white;"></div>
+            <div class="color-swatch" style="background-color: red;"></div>
+            <div class="color-swatch" style="background-color: lightblue;"></div>
+            <div class="color-swatch" style="background-color: skyblue;"></div>
+            <div class="color-swatch" style="background-color: greenyellow;"></div>
+            <div class="color-swatch" style="background-color: lawngreen;"></div>
+            <div class="color-swatch" style="background-color: yellow;"></div>
+            <div class="color-swatch" style="background-color: orange;"></div>
+            <div class="color-swatch" style="background-color: brown;"></div>
+            <div class="color-swatch" style="background-color: purple;"></div>
+            <div class="color-swatch" id="custom-color-swatch"></div>
+        </div>
+
+        <div class="controls-actions">
+            <button id="erase"><img src="./Sketch Pad_files/eraser.svg" alt=""></button>
+            
+            <button id="drawTool" style="margin-right: 0;"><img src="./Sketch Pad_files/pen.svg"></button>
+            <span class="box" style="padding: 8px;">
+                <input type="range" id="pen-size" min="1" max="20" value="3">
+                <label for="pen-px" id="pen-px"></label>
+            </span>
+
+            <button id="panTool"><img src="./Sketch Pad_files/move.svg"></button>
+        </div>
+    </div>
+
+    <div class="grid-selector" id="grid-selector" style="display: none;">
+        <button class="zend" id="square-grid">
+            <img src="./Sketch Pad_files/grid.svg" alt="Square Grid" style="padding: 4px;">
+        </button>
+        <button class="zend" id="notebook-grid">
+            <img src="./Sketch Pad_files/lines.svg" alt="Notebook" style="padding: 4px;">
+        </button>
+        <button class="zend" id="dot-grid">
+            <img src="./Sketch Pad_files/dots.svg" alt="Dot Grid" style="padding: 4px;">
+        </button>
+        <button class="zend" id="graph-paper">
+            <img src="./Sketch Pad_files/graph.svg" alt="Graph Paper" style="padding: 4px;">
+        </button>
+    </div>
+
+    <div id="color-dialog" class="color-dialog">
+        <label for="custom-color">Choose Color:</label>
+        <input type="color" id="custom-color" value="#ffffff">
+        <button id="apply-color">Apply</button>
+        <button id="close-dialog">Close</button>
+    </div>
+
+    <span class="text-input-container">
+        <div class="input-wrapper">
+            <button id="reset" class="zend">
+                <img src="./Sketch Pad_files/reset.svg" alt="">
+            </button>
+            <textarea id="context-input" placeholder="Optional context or description..." style="height: 38px;"></textarea>
+            <button class="zend" id="zend">
+                <img src="./Sketch Pad_files/sparkles.svg" alt="">
+            </button>
+        </div>
+    </span>
+
+    <script src="./Sketch Pad_files/notepad.js.download"></script>
+
+
+</body></html>

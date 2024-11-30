@@ -1,0 +1,224 @@
+:root {
+    --canvas-bg-color: rgb(19, 18, 18);
+    --control-bg-color: rgb(36, 33, 33);
+    --button-bg-color: rgba(128, 128, 128, 0.87);
+    --button-hover-bg-color: rgba(128, 128, 128, 1);
+    --accent-color: #4CAF50; /* Green accent color */
+    --text-color: white;
+    --border-color: rgba(255, 255, 255, 0.2);
+    --placeholder-color: rgba(128, 128, 128, 0.459);
+}
+*{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+body {
+    font-family: 'Arial';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-color: var(--canvas-bg-color);
+    color: var(--text-color);
+}
+
+.toggle-button {
+    position: absolute;
+    top: 16px;
+    right: 10px; 
+    background: none;
+    border: none;
+    color: green;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 3;
+    border-radius: 50px;
+}
+.close{
+    font-size: 32px;
+}
+.toggle-button:hover{
+    background-color: transparent;
+}
+
+.controls-bar {
+    position: absolute;
+    width: 100%;
+    background-color: var(--control-bg-color);
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    overflow: hidden;
+    max-height: 0;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+.controls-bar.expanded {
+    max-height: 300px; 
+    padding: 10px; 
+    width: 87vw;
+    align-items: center;
+    border-radius: 24px;
+}
+.color-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.color-swatch {
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.color-swatch:hover {
+    transform: scale(1.1);
+}
+
+#custom-color-swatch {
+    background: linear-gradient(to bottom left, white, var(--accent-color));
+}
+
+.controls-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.box {
+    background-color: var(--button-bg-color);
+}
+button {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button-bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+#reset {
+    background-color: rgba(255, 0, 0, 0.87);
+}
+
+canvas {
+    border: 1px solid var(--border-color);
+    background-color: var(--canvas-bg-color);
+    cursor: crosshair;
+    flex-grow: 1; 
+    width: 100vw;
+    margin-top: 0;
+    height: calc(100vh- 80px); 
+    margin-top: 16px;
+    border: transparent;
+}
+
+.color-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 10;
+}
+
+.color-dialog button {
+    margin-top: 10px;
+}
+
+.zend {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
+
+.zend img {
+    height: 26px;
+    border-radius: 50%;
+}
+
+.zend:hover {
+    opacity: 0.8;
+}
+
+
+.text-input-container {
+    position: absolute;
+    bottom: 10px;
+    z-index: 10;
+    margin-top: 10px;
+    width: clamp(80vw, 70vw, 60vw);
+}
+.input-wrapper {
+    display: flex;
+    align-items: flex-end;
+    background-color: var(--control-bg-color);
+    border-radius: 26px;
+    padding: 10px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.input-wrapper:focus-within {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+textarea {
+    width: 100%;
+    height: auto; /* Allow it to resize */
+    max-height: calc(5 * 1.5em); /* Limit to 5 lines */
+    overflow-y: auto; /* Enable scrolling when exceeding max-height */
+    border: none; /* Remove border */
+    outline: none;
+    background-color: transparent;
+    font-size: 1rem;
+    color: var(--text-color);
+    padding: 0;
+    margin-right: 10px;
+    margin-left: 10px;
+    resize: none; /* Disable manual resizing */
+    transition: border 0.2s; /* Transition for border on focus */
+
+}
+
+textarea::placeholder {
+    color: var(--placeholder-color);
+}
+
+.grid-selector {
+    position: absolute;
+    top: 50%; /* Adjust as needed */
+    right: 3px; /* Adjust as needed */
+    background-color: var(--control-bg-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    z-index: 2;
+}

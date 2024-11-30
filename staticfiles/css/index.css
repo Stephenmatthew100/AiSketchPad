@@ -1,0 +1,162 @@
+:root {
+    --canvas-bg-color: rgb(19, 18, 18);
+    --control-bg-color: rgb(36, 33, 33);
+    --button-bg-color: rgba(128, 128, 128, 0.87);
+    --button-hover-bg-color: rgba(128, 128, 128, 1);
+    --accent-color: #4CAF50;
+    --text-color: white;
+    --border-color: rgba(255, 255, 255, 0.2);
+    --placeholder-color: rgba(128, 128, 128, 0.459);
+} 
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Trebuchet MS';
+    background-color: var(--canvas-bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    text-wrap: wrap;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--control-bg-color);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.3rem;
+}
+
+nav a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.3s;
+    }
+
+nav a:hover {
+    color: var(--border-color);
+}
+
+.hero {
+    text-align: left;
+    padding: 3rem 2rem;
+    background-color: var(--canvas-bg-color);
+}
+
+.hero h1 {
+    font-size: 2.3rem;
+}
+
+.finetext li{
+    color: var(--button-hover-bg-color);
+    font-size: 1.2rem;
+    margin: 1rem 0;
+}
+
+.hero-image{
+    width: 40rem;
+    height: 45rem;
+}
+
+.cta-button {
+    display: flex;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    padding: .5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    width: max-content;
+    padding-right: 16px;
+}
+
+.cta-button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+.features, .how-it-works, .testimonials, .cta {
+    padding: 2rem 1.5rem;
+    background-color: var(--control-bg-color);
+    text-align: center;
+}
+
+.features h2, .how-it-works h2, .testimonials h2 {
+    margin-bottom: 1rem;
+}
+
+.feature-grid, .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.feature-card, .step {
+    background-color: var(--button-bg-color);
+    padding: 1.2rem;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.feature-card:hover, .step:hover {
+    transform: translateY(-5px);
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: var(--control-bg-color);
+    color: var(--text-color);
+    text-align: center;
+}
+
+.footer-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-right: 1rem;
+}
+
+.social-media a {
+    color: var(--text-color);
+    margin-right: 1rem;
+    text-decoration: none;
+}
+
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .home{
+        flex-direction: column;
+    }
+}
+
+.coming-soon-label {
+    display: inline-block;
+    background-color: #f39c12; /* Bright orange background */
+    color: white; /* White text */
+    padding: 5px 10px; /* Padding around the text */
+    border-radius: 15px; /* Rounded corners */
+    font-weight: bold; /* Bold text */
+    margin-top: 10px; /* Space above the label */
+    animation: pulse 1.5s infinite; /* Pulsing effect */
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
