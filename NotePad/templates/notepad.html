@@ -49,48 +49,41 @@
         <span class="hamburger">&#9776;</span>
         <span class="close" style="display: none;">&times;</span>
         <button class="morph-btn" id="morph-btn">Morph to Tools</button>
+        <input type="range" id="pen-size" min="1" max="16" value="3">
+
     </button>
 
-    <div class="controls-bar" id="controls-bar">
+    <div class="controls-bar" id="controls-bar" style="display: flex;">
         <button id="reset" class="btn">
             <img src="{% static 'img/reset.svg' %}"alt="">
         </button>
-        <div>
-            <div class="toolbox">
-                <div class="color-swatches">
-                    <div class="color-swatch" style="background-color: white;"></div>
-                    <div class="color-swatch" style="background-color: red;"></div>
-                    <div class="color-swatch" style="background-color: lightblue;"></div>
-                    <div class="color-swatch" style="background-color: skyblue;"></div>
-                    <div class="color-swatch" style="background-color: greenyellow;"></div>
-                    <div class="color-swatch" style="background-color: lawngreen;"></div>
-                    <div class="color-swatch" style="background-color: yellow;"></div>
-                    <div class="color-swatch" style="background-color: orange;"></div>
-                    <div class="color-swatch" style="background-color: brown;"></div>
-                    <div class="color-swatch" style="background-color: purple;"></div>
-                    <div class="color-swatch" id="custom-color-swatch">
+        <span style="overflow-x: scroll">
+            <span class="toolbox">
+                <span class="color-swatches">
+                    <span class="color-swatch" style="background-color: white;"></span>
+                    <span class="color-swatch" style="background-color: red;"></span>
+                    <span class="color-swatch" style="background-color: yellow;"></span>
+                    <span class="color-swatch" style="background-color: lawngreen;"></span>
+                    <span class="color-swatch" style="background-color: blue;"></span>
+                    <span class="color-swatch" id="custom-color-swatch">
                         <img src="{% static 'img/color-palette.svg' %}" style="object-fit: cover;">
-                    </div>
-                </div>
+                    </span>
+                </span>
         
-                <div class="controls-actions">
+                <span class="controls-actions">
                     <button id="erase"><img src="{% static 'img/eraser.svg' %}" alt=""></button>
                     
-                    <button id="drawTool" style="margin-right: 0;"><img src="{% static 'img/pen.svg' %}"></button>
-                    <span class="box" style="padding: 8px;">
-                        <input type="range" id="pen-size" min="1" max="20" value="3">
-                        <label for="pen-px" id="pen-px"></label>
-                    </span>
+                    <button id="drawTool" style="margin-right: 0;"><img src="{% static 'img/pen.svg' %}"><label for="pen-px" id="pen-px"></label> </button>
         
                     <button id="panTool"><img src="{% static 'img/move.svg' %}"></button>
                     <button class="btn" id="set-workspace-size" title="this will be canvas size toggle btn in future" disabled></button>
                     
-                </div>
-            </div>
-            <div class="input-wrapper">
+                </span>
+            </span>
+            <span class="input-wrapper">
                 <textarea id="context-input" placeholder="Optional context or description..."></textarea>
-            </div>
-        </div>
+            </span>
+        </span s>
         <button class="btn" id="zend">
             <img src="{% static 'img/sparkles.svg' %}" alt="">
         </button>
@@ -136,7 +129,7 @@
     document.addEventListener("DOMContentLoaded", function() {
       const morphBtn = document.getElementById("morph-btn");
       const toolbox = document.querySelector(".toolbox");
-      const inputWrapper = document.querySelector(".input-wrapper"); // Correct class selector
+      const inputWrapper = document.querySelector(".input-wrapper");
 
       const leftSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-left"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>`;
       const rightSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>`;
@@ -148,9 +141,9 @@
 
           // Update the morph button content based on the current state
           if (toolbox.classList.contains("hidden")) {
-              morphBtn.innerHTML = leftSvg;  // Show left arrow when input is visible
+              morphBtn.innerHTML = leftSvg;  
           } else {
-              morphBtn.innerHTML = rightSvg; // Show right arrow when toolbox is visible
+              morphBtn.innerHTML = rightSvg;
           }
       });
     });
