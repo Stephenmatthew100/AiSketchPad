@@ -18,9 +18,10 @@ DEBUG = os.environ.get("DEBUG", "False") == "True"  # Debug mode based on enviro
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
-
+#ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", '*').split(",")
+ALLOWED_HOSTS= ["*"]
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "https://localhost").split(",")
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Media settings
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "NotePad",
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -45,6 +47,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "aiNotePad.urls"

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric.js Eraser Tool</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+    <style>
+        canvas {
+          background: black;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas" width="800" height="600"></canvas>
+
+<script>
+    // Initialize Fabric.js canvas
+    const canvas = new fabric.Canvas('canvas', {
+        isDrawingMode: true, // Enable drawing mode by default
+        backgroundColor: 'black',
+    });
+
+    // Set initial drawing brush options
+    canvas.freeDrawingBrush.color = 'white'; // Default drawing color
+    canvas.freeDrawingBrush.width = 5; // Default drawing width
+
+    // Eraser tool settings
+    let isErasing = false;
+
+    // Toggle between drawing and eraser mode
+    function toggleEraser() {
+        isErasing = !isErasing;
+
+        if (isErasing) {
+            // Switch to eraser mode
+            canvas.freeDrawingBrush.color = 'white';  // Or set to your canvas background color
+            canvas.freeDrawingBrush.globalCompositeOperation = 'destination-out'; // Erase effect
+            console.log("Eraser is now ON");
+        } else {
+            // Switch back to drawing mode
+            canvas.freeDrawingBrush.globalCompositeOperation = 'source-over'; // Normal drawing behavior
+            console.log("Eraser is now OFF");
+        }
+    }
+
+    // Reset canvas (clear all content)
+    function resetCanvas() {
+        canvas.clear();
+        canvas.backgroundColor = '#fff';  // Set background to white
+        canvas.renderAll();
+    }
+
+    // Create UI buttons for the eraser toggle and reset functionality
+    const eraserButton = document.createElement('button');
+    eraserButton.innerText = 'Toggle Eraser';
+    eraserButton.onclick = toggleEraser;
+    document.body.appendChild(eraserButton);
+
+    const resetButton = document.createElement('button');
+    resetButton.innerText = 'Reset Canvas';
+    resetButton.onclick = resetCanvas;
+    document.body.appendChild(resetButton);
+
+    // Optional: Adjusting the brush size
+    const brushSizeInput = document.createElement('input');
+    brushSizeInput.type = 'number';
+    brushSizeInput.value = 5;
+    brushSizeInput.min = 1;
+    brushSizeInput.max = 50;
+    brushSizeInput.oninput = function() {
+        canvas.freeDrawingBrush.width = parseInt(brushSizeInput.value);
+    };
+    document.body.appendChild(brushSizeInput);
+</script>
+
+</body>
+</html>

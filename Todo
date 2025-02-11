@@ -1,0 +1,5 @@
+- Fix panning that glitches like crazy when you try to pan the camera. 
+- Add real time collaboration features
+- Long press not working to bring out contex menu in mobile
+- panning not working in mobile
+- undo and redo functionlaity

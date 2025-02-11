@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .input-wrapper {
+            width: 100%;   /* Make sure the wrapper has a defined width */
+        }
+
+        textarea {
+            width: 100%;        /* Ensure it takes up the full width of the parent */
+            min-height: 40px;   /* Set an initial height */
+            padding: 8px;       /* Add some padding for comfort */
+            resize: none;       /* Disable manual resizing */
+            box-sizing: border-box;  /* Include padding/border in width/height */
+            overflow-y: hidden; /* Hide the scrollbar */
+            transition: height 0.2s ease; /* Smooth transition */
+        }
+    </style>
+    <title>Auto-Expanding Textarea</title>
+</head>
+<body>
+
+    <span class="input-wrapper">
+        <textarea id="context-input" placeholder="Optional context or description..." oninput="autoExpand(this)"></textarea>
+    </span>
+
+    <!-- <script>
+        function autoExpand(textarea) {
+            // Reset height to auto to shrink the textarea when text is deleted
+            textarea.style.height = 'auto';
+            
+            // Set the height to match the scroll height (the total content height)
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+
+        // Optional: Run the function on load to ensure initial height is correct
+        document.getElementById('context-input').addEventListener('input', function() {
+            autoExpand(this);
+        });
+
+    </script> -->
+
+</body>
+</html>

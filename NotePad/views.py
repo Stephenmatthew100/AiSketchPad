@@ -31,20 +31,54 @@ def process_image(request):
                 # 'inputs': {
                 #     'img': image,
                 #     'context': context_input
-                # },
+                # },        # Write the context and answer to the JSON file
+        
                 'message': "Image processed",
                 'data': results,
                 'status': 'success'
             }
             messages.success(request, 'Done...')
+            # write_to_json(dict_of_vars, answers)
             return JsonResponse(response_data)
         except Exception as e:
             print(e)
             messages.error(request, 'Sorry Something Came Up...')
-            return JsonResponse({'message': str(e), 'status': 'error'}, status=400)
+            return JsonResponse({'error': str(e), 'status': 'error'}, status=400)
     else:
-        return JsonResponse({'message': 'Invalid request method', 'status': 'error'}, status=405)
- 
+        return JsonResponse({'error message': 'Invalid request method', 'status': 'error'}, status=405)
+
+@csrf_exempt
+def ask_follow_up(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            question = data.get('question', '')
+            context = data.get('context', '')
+
+            if not question:
+                return JsonResponse({'message': 'No question provided', 'status': 'error'}, status=400)
+
+            # Compose prompt for follow-up question
+            prompt = f"{context} Now, answer the following follow-up question: {question}"
+
+            model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+            response = model.generate_content([prompt])
+
+            # Return the response text as the follow-up answer
+            follow_up_answer = response.text.strip()
+
+            write_to_json({'context': context, 'question': question}, {'answer': follow_up_answer})
+
+            return JsonResponse({
+                'answer': follow_up_answer,
+                'status': 'success'
+            })
+        except Exception as e:
+            return JsonResponse({'message': str(e), 'status': 'error'}, status=500)
+    else:
+        return JsonResponse({'message': 'Invalid request method', 'status': 'error'}, status=405) 
+    
+    
 # @csrf_exempt
 # def ask_follow_up(request):
 #     if request.method == 'POST':
@@ -78,34 +112,3 @@ def process_image(request):
 #             return JsonResponse({'message': str(e), 'status': 'error'}, status=500)
 #     else:
 #         return JsonResponse({'message': 'Invalid request method', 'status': 'error'}, status=405)
-
-@csrf_exempt
-def ask_follow_up(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            question = data.get('question', '')
-            context = data.get('context', '')
-
-            if not question:
-                return JsonResponse({'message': 'No question provided', 'status': 'error'}, status=400)
-
-            # Compose prompt for follow-up question
-            prompt = f"{context} Now, answer the following follow-up question: {question}"
-
-            model = genai.GenerativeModel(model_name="gemini-1.5-flash")
-            response = model.generate_content([prompt])
-
-            # Return the response text as the follow-up answer
-            follow_up_answer = response.text.strip()
-
-            write_to_json({'context': context, 'question': question}, {'answer': follow_up_answer})
-
-            return JsonResponse({
-                'answer': follow_up_answer,
-                'status': 'success'
-            })
-        except Exception as e:
-            return JsonResponse({'message': str(e), 'status': 'error'}, status=500)
-    else:
-        return JsonResponse({'message': 'Invalid request method', 'status': 'error'}, status=405)

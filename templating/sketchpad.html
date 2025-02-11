@@ -1,10 +1,10 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sketch Pad</title>
+    <!-- <link rel="stylesheet" href="../static/css/notepad.css"> -->
      <style>
       :root {
         --canvas-bg-color: rgb(19, 18, 18);
@@ -320,9 +320,57 @@ color-swatch img {
   stroke: white;
 }
 
+.result-box {
+  font-family: Arial, sans-serif;
+  border-radius: 5px;
+  max-width: 300px;
+  z-index: 9999;
+  color: white;
+}
+
+.result-box .collapsible-content {
+  display: none;
+  margin-top: 10px;
+  padding-left: 10px;
+}
+
+.result-box .collapsible-content p {
+  margin: 0;
+}
+
+.result-box  button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.result-box  button svg{
+  width: 30px;
+  height: 30px;
+}
+
+.result-box button:hover {
+  background-color: #45a049;
+}
+.result-box:hover {
+  background-color: #f0f0f0;  /* Light color change on hover */
+}
+
+.result-box:hover::before {
+  content: '';
+  position: absolute;
+  left: var(--bounding-left);
+  top: var(--bounding-top);
+  width: var(--bounding-width);
+  height: var(--bounding-height);
+  border: 2px solid #ff0000;
+  z-index: 9998;
+}
 
      </style>
-    <link rel="icon" href="{% static 'icons/favicon.svg' %}" type="image/svg+xml">
+    <link rel="icon" href="../static/icons/favicon.svg" type="image/svg+xml">
 </head>
 <body>
     <div id="message-box"></div>
@@ -338,47 +386,50 @@ color-swatch img {
 
     <div class="controls-bar" id="controls-bar" style="display: flex;">
       <button id="reset" class="btn">
-          <img class="icon" src="{% static 'img/reset.svg' %}"alt="">
+          <img class="icon" src="../static/img/reset.svg"alt="">
       </button>
       <span style="width: 70%;">
           <span class="toolbox">
               <span class="color-swatches" >
-                  <img id="undo" src="{% static 'img/rotate-cw.svg' %}" alt="">
+                  <img id="undo" src="../static/img/rotate-cw.svg" alt="">
                   <span class="color-swatch" style="background-color: white;"></span>
                   <span class="color-swatch" style="background-color: red;"></span>
                   <span class="color-swatch" style="background-color: yellow;"></span>
-                  <img id="redo" src="{% static 'img/rotate-ccw.svg' %}" alt="">
+                  <img id="redo" src="../static/img/rotate-ccw.svg" alt="">
                   <span class="color-swatch" style="background-color: lawngreen;"></span>
                   <span class="color-swatch" style="background-color: blue;"></span>
                   <span class="color-swatch" id="custom-color-swatch">
-                      <img class="icon"  src="{% static 'img/color-palette.svg' %}" style="object-fit: cover;">
+                      <img class="icon"  src="../static/img/color-palette.svg" style="object-fit: cover;">
                   </span>
               </span>
       
               <span class="controls-actions">
                   <span style="display:flex; flex-direction: row;">
-                      <button id="drawTool" style="margin-right: 0;"><img src="{% static 'img/pen.svg' %}"><label for="pen-px" id="pen-px"></label> </button>
-                      <!-- <button id="selectTool"><img src="{% static 'img/select.svg' %}"></button> -->
-                      <button id="erase"><img src="{% static 'img/eraser.svg' %}" alt=""></button>
-                      <button id="panTool"><img src="{% static 'img/move.svg' %}"></button>
-                      <!-- <button id="gridSelectorTool"><img class="icon"  src="{% static 'img/graph.svg' %}"></button>     -->
+                      <button id="drawTool" style="margin-right: 0;"><img src="../static/img/pen.svg"><label for="pen-px" id="pen-px"></label> </button>
+                      <!-- <button id="selectTool"><img src="../static/img/select.svg"></button> -->
+                      <button id="erase"><img src="../static/img/eraser.svg" alt=""></button>
+                      <button id="panTool"><img src="../static/img/move.svg"></button>
+                      <!-- <button id="gridSelectorTool"><img class="icon"  src="../static/img/graph.svg"></button>     -->
                   </span>
                   <input type="range" id="pen-size" min="1" max="16" value="3">
               </span>
           </span>
+          <span class="input-wrapper">
+              <textarea id="context-input" placeholder="Optional context or description..."></textarea>
+          </span>
       </span>
       <button class="btn" id="zend">
-          <img class="icon"  src="{% static 'img/sparkles.svg' %}" alt="">
+          <img class="icon"  src="../static/img/sparkles.svg" alt="">
       </button>
     </div>
 
     <div id="context-menu">
-      <button id="duplicate" class="disabled"><img src="{% static 'img/copy.svg' %}" alt="Duplicate"> Duplicate</button>
-      <button id="delete" class="disabled"><img src="{% static 'img/trash.svg' %}" alt="Delete"> Delete</button>
-      <button id="send-to-back" class="disabled"><img src="{% static 'img/send-to-back.svg' %}" alt="Send to Back"> Send to Back</button>
-      <button id="bring-to-front" class="disabled"><img src="{% static 'img/send-to-front.svg' %}" alt="Bring to Front"> Bring to Front</button>
-      <button id="lock-object" class="disabled"><img src="{% static 'img/lock.svg' %}" alt="Lock"> Lock</button>
-      <button id="object-properties" class="disabled"><img src="{% static 'img/info.svg' %}" alt="Properties"> Object Properties</button>
+      <button id="duplicate" class="disabled"><img src="../static/img/copy.svg" alt="Duplicate"> Duplicate</button>
+      <button id="delete" class="disabled"><img src="../static/img/trash.svg" alt="Delete"> Delete</button>
+      <button id="send-to-back" class="disabled"><img src="../static/img/send-to-back.svg" alt="Send to Back"> Send to Back</button>
+      <button id="bring-to-front" class="disabled"><img src="../static/img/send-to-front.svg" alt="Bring to Front"> Bring to Front</button>
+      <button id="lock-object" class="disabled"><img src="../static/img/lock.svg" alt="Lock"> Lock</button>
+      <button id="object-properties" class="disabled"><img src="../static/img/info.svg" alt="Properties"> Object Properties</button>
   
       <div class="messageBox">
           <input required="" placeholder="Ask AI..." type="text" id="messageInput" />
@@ -392,7 +443,7 @@ color-swatch img {
   </div>
   
   
-    <script src="{% static 'js/fabric.min.js' %}"></script>
-    <script src="{% static 'js/notepad.js' %}"></script>
+    <script src="fabric.min.js"></script> // fabric 4.5.0
+    <script src="sketchpad.js"></script>
 </body>
 </html>
